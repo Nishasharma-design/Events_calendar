@@ -1,0 +1,45 @@
+.dayCell {
+  background-color: #ffffffcc;
+  border: 2px dashed #9b59b6;
+  border-radius: 12px;
+  min-height: 100px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &:hover {
+    background-color: #f1c40f33;
+    transform: scale(1.05);
+  }
+}
+
+.dateNumber {
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.events {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.eventItem {
+  background-color: #74b9ff;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    background-color: #0984e3;
+  }
+}
+
+  
+  

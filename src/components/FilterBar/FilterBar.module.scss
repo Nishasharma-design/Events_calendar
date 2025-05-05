@@ -1,0 +1,63 @@
+$primary-color: #f56b00; 
+$secondary-color: #00bfae; 
+$highlight-color: #ff8c00; 
+$background-color: #f1f1f1; 
+$text-color: #333333; 
+$border-color: #cccccc; 
+$clear-btn-color: #ff4d4d;
+
+
+.filter_bar {
+  display: flex;
+  gap: 15px;
+  background-color: $background-color;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  justify-content: center;
+  
+  select {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    background-color: white;
+    color: $text-color;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 5px $primary-color;
+    }
+    
+    & option {
+      color: $text-color;
+    }
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    
+    &:hover {
+      background-color: $highlight-color;
+      transform: scale(1.05);
+    }
+    
+    &:focus {
+      outline: none;
+    }
+  }
+  
+  .clear_btn {
+    background-color: $clear-btn-color;
+    
+  }
+}

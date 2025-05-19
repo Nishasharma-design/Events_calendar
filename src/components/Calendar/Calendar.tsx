@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CalendarHeader from "../CalendarHeader/CalendarHeader";
 import DayCell from "../DayCell/DayCell";
 import Modal, { EventType } from "../Modal/Modal";
@@ -22,6 +22,24 @@ const Calendar = () => {
 
    const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
    const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+
+
+   const fetchEvents = async () => {
+    try {
+       const response = await fetch('http://localhost:8080/events');
+       if (!response.ok) {
+          throw new Error('Failed to fetch events');
+       }
+       const data = await response.json();
+       setEvents(data); 
+    } catch (error) {
+       console.error('Error fetching events:', error);
+    }
+ };
+
+ useEffect(() => {
+    fetchEvents();
+ }, []);
 
    const handleViewEvent = (event: EventType) => {
     setViewEvent(event);
@@ -103,16 +121,23 @@ const Calendar = () => {
           onPrev={handlePrevMonth}
           onNext={handleNextMonth}
           />
-
+       
        <div className={classes.weekDays}>
-        {days.map((day) => (
-            
-            <DayCell date={day} onClick={handleDayClick} events={filteredEvents.filter(
-                (event) => day && new Date(event.startDate).toDateString() === day.toDateString()
-            )}
-            onEventClick={handleViewEvent}
-            />
-        ))}
+       {days
+  .filter((day): day is Date => day !== null)
+  .map((day) => (
+    <DayCell
+      key={day.toISOString()}
+      date={day}
+      onClick={handleDayClick}
+      events={filteredEvents.filter(
+        (event) =>
+          new Date(event.startDate).toDateString() === day.toDateString()
+      )}
+      onEventClick={handleViewEvent}
+    />
+  ))}
+
         </div> 
 
         {isModalOpen && selectedDate && (

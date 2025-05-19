@@ -26,12 +26,14 @@ function DayCell({ date, onClick, events, onEventClick }: DayCellProps) {
                 <>
                 <div className={classes.dateNumber}>{date.getDate()}</div>
                 <div className={classes.events}>
-                    {events.map((event) => (
-                        <div className={classes.eventItem} onClick={(e) => {
+                    {events.map((event, index) => (
+                        <div 
+                        key={`${event.label}-${index}`}
+                        className={classes.eventItem} onClick={(e) => {
                             e.stopPropagation();
                             onEventClick(event);
                         }}>
-                            {event.eventName}
+                            {event.label}
                             </div>
                     ))}
                 </div>

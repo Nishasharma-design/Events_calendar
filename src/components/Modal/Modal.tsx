@@ -9,12 +9,13 @@ type ModalProps = {
 };
 
 export type EventType = {
-  eventName: string;
-  startDate: string;
-  endDate: string;
-  location: string;
   label: string;
+  startDate: string;
+  finishDate: string; 
+  location: string;
+  description: string; 
 };
+
 
 function Modal({ isOpen, onClose, selectedDate, addEvent }: ModalProps) {
   const {
@@ -31,11 +32,28 @@ function Modal({ isOpen, onClose, selectedDate, addEvent }: ModalProps) {
 
   if (!isOpen || !selectedDate) return null;
 
-  const onSubmit = (data: EventType) => {
-    addEvent(data);
-    reset();
-    onClose();
+  const onSubmit = async (data: EventType) => {
+    try {
+      const response = await fetch('http://localhost:8080/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create event');
+      }
+  
+      const savedEvent = await response.json();
+      addEvent(savedEvent); 
+      reset();
+      onClose();
+    } catch (error) {
+      console.error('Error creating event:', error);
+      alert('Failed to create event');
+    }
   };
+  
 
   return (
     <div className={classes.modalOverlay}>
@@ -45,8 +63,8 @@ function Modal({ isOpen, onClose, selectedDate, addEvent }: ModalProps) {
 
           <div className={classes.inputGroup}>
             <label>Event Name</label>
-            <input {...register('eventName', { required: 'Event Name is required' })} />
-            {errors.eventName && <span className={classes.error}>{errors.eventName.message}</span>}
+            <input {...register('description', { required: 'Event Name is required' })} />
+            {errors.description && <span className={classes.error}>{errors.description.message}</span>}
           </div>
 
           <div className={classes.inputGroup}>
@@ -68,14 +86,14 @@ function Modal({ isOpen, onClose, selectedDate, addEvent }: ModalProps) {
             <label>End Date</label>
             <input
               type="date"
-              {...register('endDate', {
+              {...register('finishDate', {
                 required: 'End Date is required',
                 validate: (value) => {
                   return value >= getValues('startDate') || 'End date cannot be before start date';
                 },
               })}
             />
-            {errors.endDate && <span className={classes.error}>{errors.endDate.message}</span>}
+            {errors.finishDate && <span className={classes.error}>{errors.finishDate.message}</span>}
           </div>
 
           <div className={classes.inputGroup}>

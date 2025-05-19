@@ -19,11 +19,11 @@ const EventDetailsModal = ({ event, onClose }: Props) => {
     return (
         <div className={classes.modal_overlay}>
             <div className={classes.modal_content}>
-                <h2>{event.eventName}</h2>
+                <h2>{event.label}</h2>
                 <p><strong>Location:</strong> {event.location}</p>
                 <p><strong>Label:</strong> {event.label}</p>
                 <p><strong>Start:</strong> {event.startDate}</p>
-                <p><strong>End:</strong> {event.endDate}</p>
+                <p><strong>End:</strong> {event.finishDate}</p>
                 <p><strong>Countdown:</strong> {getCountdown()}</p>
                 <button onClick={onClose}>Close</button>
             </div>
